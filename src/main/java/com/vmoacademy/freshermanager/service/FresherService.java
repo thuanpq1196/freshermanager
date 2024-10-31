@@ -12,4 +12,10 @@ public interface FresherService {
     Fresher save(Fresher fresher);
 
     void deleteById(int id);
+
+    List<Fresher> findByName(String fresherName);
+
+    List<Fresher> findByEmail(String email);
+
+    void caculatedPoint(int id);
 }

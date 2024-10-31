@@ -12,4 +12,8 @@ public interface FresherDAO {
     Fresher save(Fresher fresher);
 
     void deleteById(int id);
+
+    List<Fresher> findByName(String fresherName);
+//    Fresher findByLanguage(String language);
+    List<Fresher> findByEmail(String email);
 }

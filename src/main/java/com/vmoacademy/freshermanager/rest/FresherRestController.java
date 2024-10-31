@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/fresher")
 public class FresherRestController {
     private FresherService fresherService;
 
@@ -18,27 +18,22 @@ public class FresherRestController {
         this.fresherService = fresherService;
     }
 
-    @GetMapping("/fresher")
-    public List<Fresher> findAll(){
-        return fresherService.findAll();
+    @GetMapping
+    public int countAll(){
+        return fresherService.findAll().size();
     }
 
-    @GetMapping("/fresher/{id}")
+    @GetMapping("/byid/{id}")
     public Fresher findById(@PathVariable int id){
-        Fresher fresher = fresherService.findById(id);
-        if(fresher == null){
-            throw new FresherNotFoundException("Fresher id not found - "+id);
-        }
-        return fresher;
+        return fresherService.findById(id);
     }
 
-    @PostMapping("/fresher")
+    @PostMapping
     public Fresher addFresher(@RequestBody Fresher theFresher){
-        theFresher.setId(0);
         Fresher fresher = fresherService.save(theFresher);
         return fresher;
     }
-    @PutMapping("/fresher")
+    @PutMapping
     public Fresher updateFresher(@RequestBody Fresher theFresher){
         Fresher dbFresher = fresherService.findById(theFresher.getId());
         if(dbFresher == null){
@@ -47,13 +42,23 @@ public class FresherRestController {
         Fresher updatedFresher = fresherService.save(theFresher);
         return updatedFresher;
     }
-    @DeleteMapping("/fresher/{id}")
+    @DeleteMapping("/byid/{id}")
     public String deleteFresher(@PathVariable int id){
-        Fresher fresher = fresherService.findById(id);
-        if(fresher == null){
-            throw new FresherNotFoundException("Fresher id not found - "+id);
-        }
         fresherService.deleteById(id);
         return "Delete fresher with id: " +id;
+    }
+    @PutMapping("/byid/{id}")
+    public String caculatedPoint(@PathVariable int id){
+        fresherService.caculatedPoint(id);
+        return "Caculated AVG point for fresher with id: "+id+" - "+id;
+    }
+    @GetMapping("/byname/{name}")
+    public List<Fresher> findByName(@PathVariable String name){
+        return fresherService.findByName(name);
+    }
+
+    @GetMapping("/byemail/{email}")
+    public List<Fresher> findByEmail(@PathVariable String email){
+        return fresherService.findByEmail(email);
     }
 }

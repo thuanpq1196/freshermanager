@@ -1,5 +1,7 @@
 package com.vmoacademy.freshermanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -23,13 +25,15 @@ public class Fresher {
     private Double point3;
     @Column(name ="avg_point")
     private Double avgPoint;
-    @Column(name ="department_id")
-    private Integer departmentId;
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "department_id",nullable = false)
+    private Department department;
 
     public Fresher() {
     }
 
-    public Fresher(String fresherName, String gender, String email, double point1, double point2, double point3, Double avgPoint, Integer departmentId) {
+    public Fresher(String fresherName, String gender, String email, double point1, double point2, double point3, Double avgPoint, Department department) {
         this.fresherName = fresherName;
         this.gender = gender;
         this.email = email;
@@ -37,7 +41,7 @@ public class Fresher {
         this.point2 = point2;
         this.point3 = point3;
         this.avgPoint = avgPoint;
-        this.departmentId = departmentId;
+        this.department = department;
     }
 
     @Override
@@ -51,7 +55,7 @@ public class Fresher {
                 ", point2=" + point2 +
                 ", point3=" + point3 +
                 ", avgPoint=" + avgPoint +
-                ", departmentId=" + departmentId +
+                ", department=" + department +
                 '}';
     }
 
@@ -119,11 +123,10 @@ public class Fresher {
         this.avgPoint = avgPoint;
     }
 
-    public Integer getDepartmentId() {
-        return departmentId;
+    public Department getDepartment() {
+        return department;
     }
-
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartment(Department departmentId) {
+        this.department = departmentId;
     }
 }

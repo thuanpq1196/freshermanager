@@ -1,5 +1,4 @@
 package com.vmoacademy.freshermanager.exceptionHandler;
 
-public class FresherErrorResponse extends ErrorRespone{
-
+public class DepartmentErrorResponse extends ErrorRespone{
 }

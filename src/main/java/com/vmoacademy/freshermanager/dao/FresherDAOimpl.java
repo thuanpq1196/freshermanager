@@ -38,4 +38,20 @@ public class FresherDAOimpl implements FresherDAO{
         Fresher dbFresher = entityManager.find(Fresher.class, id);
         entityManager.remove(dbFresher);
     }
+
+    @Override
+    public List<Fresher> findByName(String fresherName) {
+        TypedQuery<Fresher> theQuery = entityManager.createQuery(" FROM Fresher WHERE fresherName =: theData", Fresher.class);
+        theQuery.setParameter("theData",fresherName);
+        List<Fresher> freshers = theQuery.getResultList();
+        return freshers;
+    }
+
+    @Override
+    public List<Fresher> findByEmail(String email) {
+        TypedQuery<Fresher> theQuery = entityManager.createQuery(" FROM Fresher WHERE email =: theData", Fresher.class);
+        theQuery.setParameter("theData",email);
+        List<Fresher> freshers = theQuery.getResultList();
+        return freshers;
+    }
 }
